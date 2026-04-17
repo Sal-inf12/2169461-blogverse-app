@@ -1,0 +1,53 @@
+services:
+
+  db:
+    image: mysql:8
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: blogverse
+      MYSQL_USER: bloguser
+      MYSQL_PASSWORD: blogpassword
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - blogverse-network
+
+  backend:
+    build:
+      context: ./2169461-blogverse-backend
+    image: tp2-2169461-blogverse-backend
+    restart: unless-stopped
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_NAME: blogverse
+      DB_USER: bloguser
+      DB_PASSWORD: blogpassword
+      PORT: 3000
+    ports:
+      - "3000:3000"
+    networks:
+      - blogverse-network
+    depends_on:
+      - db
+
+  frontend:
+    build:
+      context: ./2169461-blogverse-frontend
+      args:
+        VITE_API_URL: http://backend:3000
+    image: tp2-2169461-blogverse-frontend
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    networks:
+      - blogverse-network
+    depends_on:
+      - backend
+
+volumes:
+  db_data:
+
+networks:
+  blogverse-network:
