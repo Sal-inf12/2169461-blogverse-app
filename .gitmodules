@@ -1,6 +1,6 @@
 [submodule "2169461-blogverse-frontend"]
 	path = 2169461-blogverse-frontend
-	url = git@github.com:Sal-inf12/2169461-blogverse-frontend.git
+	url = https://github.com/Sal-inf12/2169461-blogverse-frontend.git
 [submodule "2169461-blogverse-backend"]
 	path = 2169461-blogverse-backend
 	url = https://github.com/Sal-inf12/2169461-blogverse-backend.git
